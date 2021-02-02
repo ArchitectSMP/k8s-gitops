@@ -24,6 +24,14 @@ spec:
           addresses:
             - 138.201.203.147/32
             - 138.201.203.183/32
+    prometheusRule:
+      enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
     controller:
       image:
         registry: docker.io
