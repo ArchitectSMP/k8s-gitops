@@ -15,7 +15,7 @@ spec:
         dns01:
           cloudflare:
             email: mc.architect.smp@gmail.com
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cloudflare-api-key
               key: api-key
 ---
@@ -35,7 +35,7 @@ spec:
         dns01:
           cloudflare:
             email: mc.architect.smp@gmail.com
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cloudflare-api-key
               key: api-key
 ---
