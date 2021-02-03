@@ -25,6 +25,9 @@ spec:
       enabled: true
       path: /oauth2
       hosts: [auth.architectsmp.com]
+      tls:
+        - hosts:
+            - auth.architectsmp.com
     extraArgs:
       provider: oidc
       oidc-issuer-url: https://architectsmp.auth0.com/

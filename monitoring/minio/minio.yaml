@@ -33,6 +33,9 @@ spec:
       annotations:
         kubernetes.io/ingress.class: nginx
       hosts: [minio.architectsmp.com]
+      tls:
+        - hosts:
+            - minio.architectsmp.com
     resources:
       requests:
         memory: 350Mi
