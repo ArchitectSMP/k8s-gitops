@@ -32,6 +32,8 @@ spec:
             nginx.ingress.kubernetes.io/auth-url: "https://auth.architectsmp.com/oauth2/auth"
             nginx.ingress.kubernetes.io/auth-signin: https://auth.architectsmp.com/oauth2/start
           hosts: ["thanos.architectsmp.com"]
+          tls:
+            - hosts: ["thanos.architectsmp.com"]
     compact:
       retentionResolution1h: 5y
     objstore:
