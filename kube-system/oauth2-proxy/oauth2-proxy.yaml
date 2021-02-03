@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oauth2-proxy
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.helm.sh/stable
+      chart: oauth2-proxy
+      version: 3.2.5
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-stable-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: "quay.io/oauth2-proxy/oauth2-proxy"
+      tag: "v6.1.1"
+    replicaCount: 1
+    ingress:
+      enabled: true
+      path: /oauth2
+      hosts: [auth.architectsmp.com]
+    extraArgs:
+      provider: oidc
+      oidc-issuer-url: https://architectsmp.auth0.com/
+      skip-provider-button:
+      pass-authorization-header:
+      email-domain: "*"
+      cookie-domain: .architectsmp.com
+      whitelist-domain: .architectsmp.com
+  valuesFrom:
+    - kind: Secret
+      name: "oauth2-proxy-helm-values"
+      optional: false
