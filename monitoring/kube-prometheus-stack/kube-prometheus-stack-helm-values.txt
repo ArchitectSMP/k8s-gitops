@@ -38,6 +38,6 @@ grafana:
       client_id: $AUTH0_GRAFANA_CLIENT_ID
       client_secret: $AUTH0_GRAFANA_CLIENT_SECRET
       scopes: openid profile email
-      auth_url: https://architectsmp.auth0.com/authorize
-      token_url: https://architectsmp.auth0.com/oauth/token
-      api_url: https://architectsmp.auth0.com/userinfo
+      auth_url: https://architectsmp.eu.auth0.com/authorize
+      token_url: https://architectsmp.eu.auth0.com/oauth/token
+      api_url: https://architectsmp.eu.auth0.com/userinfo

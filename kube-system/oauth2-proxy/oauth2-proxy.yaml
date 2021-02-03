@@ -30,7 +30,7 @@ spec:
             - auth.architectsmp.com
     extraArgs:
       provider: oidc
-      oidc-issuer-url: https://architectsmp.auth0.com/
+      oidc-issuer-url: https://architectsmp.eu.auth0.com/
       skip-provider-button:
       pass-authorization-header:
       email-domain: "*"
