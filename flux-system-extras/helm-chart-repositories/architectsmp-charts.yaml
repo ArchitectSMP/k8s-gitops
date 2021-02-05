@@ -1,0 +1,16 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: architectsmp-charts
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/ArchitectSMP/charts
+  ref:
+    branch: master
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/
