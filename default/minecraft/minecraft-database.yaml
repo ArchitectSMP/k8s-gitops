@@ -8,8 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
-      chart: minecraft
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: mariadb
       version: 2.1.4
       sourceRef:
         kind: HelmRepository

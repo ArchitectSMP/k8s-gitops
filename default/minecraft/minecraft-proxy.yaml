@@ -8,10 +8,64 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: bungee-deployment
-      version: 2.2
+      chart: ./releases/bungee-1.1.tgz
       sourceRef:
         kind: GitRepository
         name: architectsmp-charts
         namespace: flux-system
       interval: 5m
+  values:
+    image: itzg/bungeecord
+    imageTag: 1.5.0-adopt13
+    bungeeCord:
+      configFilePath: /server/config.yml
+      serviceType: LoadBalancer
+      loadBalancerIP: 138.201.203.179
+      memory: 512M
+      config:
+        player_limit: -1
+        ip_forward: false
+        permissions:
+          default:
+            - bungeecord.command.server
+            - bungeecord.command.list
+          admin:
+            - bungeecord.command.alert
+            - bungeecord.command.end
+            - bungeecord.command.ip
+            - bungeecord.command.reload
+        timeout: 30000
+        log_pings: true
+        log_commands: false
+        online_mode: true
+        servers:
+          creative:
+            motd: "&1Architect SMP - Creative"
+            address: minecraft-creative-minecraft:25565
+            restricted: false
+        listeners:
+          - query_port: 25577
+            motd: "&1Architect SMP - Bungee"
+            priorities:
+              - creative
+            bind_local_address: true
+            tab_list: GLOBAL_PING
+            query_enabled: false
+            host: 0.0.0.0:25577
+            forced_hosts:
+              creative.architectsmp.com: creative
+            max_players: 40
+            tab_size: 60
+            ping_passthrough: false
+            force_default_server: false
+            proxy_protocol: false
+        disabled_commands: []
+        network_compression_threshold: 256
+        groups:
+          chipuk:
+            - admin
+        connection_throttle: 4000
+        connection_throttle_limit: 3
+        stats: f2876aa6-74d2-468c-90ee-1377111f1c9f
+        forge_support: false
+        inject_commands: false

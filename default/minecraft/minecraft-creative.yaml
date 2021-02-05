@@ -36,14 +36,14 @@ spec:
       eula: "TRUE"
       type: PAPER
       mode: creative
+      onlineMode: false
       paperDownloadUrl: https://papermc.io/api/v1/paper/1.16.4/latest/download
       forceReDownload: true
       memory: 8G
       difficulty: hard
       maxTickTime: -1
       motd: "Architect SMP Creative"
-      serviceType: LoadBalancer
-      loadBalancerIP: 138.201.203.147
+      serviceType: ClusterIP
       dynmap:
         service:
           enabled: true
