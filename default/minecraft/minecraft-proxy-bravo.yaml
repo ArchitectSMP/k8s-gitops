@@ -25,6 +25,7 @@ spec:
       type: BUNGEECORD
       serviceType: LoadBalancer
       loadBalancerIP: 138.201.203.147
+      externalTrafficPolicy: Local
       memory: 2G
       rcon:
         enabled: true
