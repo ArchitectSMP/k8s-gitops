@@ -1,0 +1,10 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minecraft-proxy-bravo
+spec:
+  values:
+    bungeeCord:
+      loadBalancerIP: 138.201.203.147
+      memory: 512M

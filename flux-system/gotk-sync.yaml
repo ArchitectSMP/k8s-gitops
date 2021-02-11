@@ -11,6 +11,27 @@ spec:
   secretRef:
     name: flux-system
   url: ssh://git@github.com/architectsmp/k8s-gitops
+  ignore: |
+    # exclude dev directory
+    /dev/
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: flux-system-dev
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: dev
+  secretRef:
+    name: flux-system
+  url: ssh://git@github.com/architectsmp/k8s-gitops
+  ignore: |
+    # exclude all
+    /*
+    # include dev directory
+    !/dev/
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
