@@ -1,0 +1,17 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minecraft-survival
+spec:
+  values:
+    persistence:
+      dataDir:
+        size: 1Gi
+    resources:
+      requests:
+        memory: 1024Mi
+      limits:
+        memory: 2048Mi
+    minecraftServer:
+      memory: 1G
