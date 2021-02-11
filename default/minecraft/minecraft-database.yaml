@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: bitnami/mariadb
-      tag: 10.4.17-debian-10-r74
+      tag: 10.5.8-debian-10-r74
     auth:
       rootPassword: architectsmp
       database: architectsmp
