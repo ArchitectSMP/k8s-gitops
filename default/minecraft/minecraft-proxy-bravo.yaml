@@ -22,7 +22,7 @@ spec:
       dataDir:
         enabled: true
     bungeeCord:
-      type: BUNGEECORD
+      type: WATERFALL
       serviceType: LoadBalancer
       loadBalancerIP: 138.201.203.147
       externalTrafficPolicy: Local
