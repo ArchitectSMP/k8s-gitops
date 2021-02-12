@@ -6,5 +6,5 @@ metadata:
 spec:
   values:
     bungeeCord:
-      loadBalancerIP: 138.201.203.147
+      loadBalancerIP: 138.201.203.179
       memory: 512M
