@@ -52,7 +52,7 @@ spec:
       levelSeed: "-2143500864"
       maxPlayers: 40
       maxWorldSize: 100000
-      viewDistance: 12
+      viewDistance: 4
       maxTickTime: -1
       memory: 8G
       motd: '"\\u00A78-\\u00A7r--\\u00A78-\\u00A7r [ \\u00A7b\\u00A7lArchitect SMP\\u00A7r ] \\u00A78-\\u00A7r--\\u00A78-\\u00A7r [ \\u00A7a\\u00A7lSurvival \\u00A7r] \\u00A78-\\u00A7r--\\u00A78-\\u00A7r\\n\\u00A78-\\u00A7r--\\u00A78-\\u00A7r [ \\u00A7eNews:\\u00A7r ] --\\u00A7r [ \\u00A7ddonate.architectsmp.com\\u00A7r ] \\u00A78-\\u00A7r--\\u00A78-\\u00A7r"'
