@@ -24,7 +24,7 @@ spec:
     bungeeCord:
       type: WATERFALL
       serviceType: LoadBalancer
-      loadBalancerIP: 138.201.203.147
+      loadBalancerIP: 138.201.203.183
       externalTrafficPolicy: Local
       memory: 2G
       rcon:
