@@ -1,8 +1,9 @@
 {
   enabled: true,
   timezone: "UTC",
+  schedule: "after 5pm and before 10pm",
   dependencyDashboard: true,
-  dependencyDashboardTitle: "Renovate Dashboard",
+  dependencyDashboardAutoclose: true,
   commitMessageSuffix: "[ci-skip]",
   commitBody: "Signed-off-by: Architect SMP <bloodycoffin@users.noreply.github.com>",
   // Do not notify on closed unmerged PRs
@@ -40,6 +41,24 @@
       updateTypes: ["major", "minor", "patch"],
       enabled: true,
       separateMinorPatch: true,
+    },
+    // Automerge updates
+    {
+      packageRules: [
+        {
+          matchUpdateTypes: ["minor", "patch", "pin", "digest"],
+          automerge: true,
+          automergeType: "branch",
+        },
+      ],
+    },
+    {
+      packageRules: [
+        {
+          matchPackagePatterns: ["^minecraft"],
+          automerge: false,
+        },
+      ],
     },
     // Add labels according to package and update types
     {
