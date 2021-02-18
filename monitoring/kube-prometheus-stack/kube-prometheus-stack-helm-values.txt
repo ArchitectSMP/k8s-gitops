@@ -22,22 +22,3 @@ alertmanager:
               {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
               {{ end }}
             {{ end }}
-grafana:
-  adminPassword: "$GRAFANA_PASSWORD"
-  grafana.ini:
-    server:
-      root_url: https://grafana.architectsmp.com
-    auth.basic:
-      disable_login_form: true
-    auth.generic_oauth:
-      enabled: true
-      allow_sign_up: true
-      team_ids:
-      allowed_organizations:
-      name: Auth0
-      client_id: $AUTH0_GRAFANA_CLIENT_ID
-      client_secret: $AUTH0_GRAFANA_CLIENT_SECRET
-      scopes: openid profile email
-      auth_url: https://architectsmp.eu.auth0.com/authorize
-      token_url: https://architectsmp.eu.auth0.com/oauth/token
-      api_url: https://architectsmp.eu.auth0.com/userinfo
