@@ -78,19 +78,9 @@ spec:
     nodeExporter:
       serviceMonitor:
         relabelings:
-          - action: replace
-            regex: (.*)
-            replacement: $1
-            sourceLabels:
-              - __meta_kubernetes_pod_node_name
-            targetLabel: kubernetes_node
-    kubelet:
-      serviceMonitor:
-        metricRelabelings:
-          - action: replace
-            sourceLabels:
-              - node
+          - sourceLabels: [__meta_kubernetes_pod_node_name]
             targetLabel: instance
+            action: replace
     grafana:
       enabled: false
     kubeEtcd:
@@ -141,8 +131,8 @@ spec:
                 requests:
                   storage: 10Gi
         thanos:
-          image: quay.io/thanos/thanos:v0.18.0
-          version: v0.15.0
+          image: quay.io/thanos/thanos:v0.17.0
+          version: v0.17.0
           objectStorageConfig:
             name: thanos
             key: object-store.yaml
