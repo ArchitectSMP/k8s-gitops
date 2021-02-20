@@ -33,7 +33,8 @@ spec:
       repository: drnic/kubectl
       tag: 1.16
     persistence:
-      storageClass: local-path
+      existingClaim: cifs-data-pvc
+      subPath: minio
     ingress:
       enabled: true
       annotations:

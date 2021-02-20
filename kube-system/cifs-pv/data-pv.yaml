@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cifs-data-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 500Gi
+  flexVolume:
+    driver: juliohm/cifs
+    options:
+      server: u257177.your-storagebox.de
+      share: /backup
+    secretRef:
+      name: cifs
+      namespace: kube-system
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cifs-data-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: data
