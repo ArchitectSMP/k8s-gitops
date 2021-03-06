@@ -32,5 +32,5 @@ spec:
     primary:
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: openebs-hostpath
         size: 8Gi
