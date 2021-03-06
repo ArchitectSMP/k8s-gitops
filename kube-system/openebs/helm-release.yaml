@@ -18,9 +18,9 @@ spec:
   values:
     # required only for cStor & Jiva
     apiserver:
-      enabled: false
+      enabled: true
     provisioner:
       enabled: false
     # openebs/openebs#3046
     webhook:
-      failurePolicy: "Ignore"
+      failurePolicy: Ignore
