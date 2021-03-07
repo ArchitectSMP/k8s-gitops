@@ -24,6 +24,37 @@ spec:
       interval: 5m
   timeout: 20m
   values:
+    additionalPrometheusRulesMap:
+      uptimerobot:
+        groups:
+          - name: public
+            rules:
+              - alert: MinecraftDown
+                expr: uptimerobot_status{c1_name="Minecraft"} > 0
+                for: 15m
+                labels:
+                  severity: critical
+                annotations:
+                  summary: "Minecraft is unreachable"
+                  description: "Minecraft has been unreachable from the internet for more than 30 minutes"
+              - alert: DynmapDown
+                expr: uptimerobot_status{c1_name="Dynmap"} > 0
+                for: 30m
+                labels:
+                  severity: critical
+                annotations:
+                  summary: "Dynmap is unreachable"
+                  description: "Dynmap has been unreachable from the internet for more than 30 minutes"
+          - name: services
+            rules:
+              - alert: ServicesDown
+                expr: uptimerobot_status > 0
+                for: 5m
+                labels:
+                  severity: error
+                annotations:
+                  summary: "{{ $labels.c1_name }} is unreachable"
+                  description: "{{ $labels.c1_name }} is unreachable from the internet for more than 5 minutes"
     server:
       resources:
         requests:
@@ -75,7 +106,8 @@ spec:
         templates: ["*.tmpl"]
       templateFiles:
         pagerduty-custom.tmpl: |-
-          {{- define "pagerduty.custom.description" -}}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}{{- end -}}
+          {{- define "pagerduty.custom.description" -}}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }}{{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}{{- end -}}
+          {{- define "pagerduty.custom.instances" -}}{{ if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }}{{ else }}{{- range $i, $alert := .Alerts }}{{- "\n" -}}{{- .Annotations.description -}}{{- end -}}{{- end -}}{{- end -}}
     nodeExporter:
       serviceMonitor:
         relabelings:
