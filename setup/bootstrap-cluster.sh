@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
@@ -8,6 +9,9 @@ need() {
 
 need "kubectl"
 need "flux"
+need "vault"
+need "sed"
+need "jq"
 
 message() {
   echo -e "\n######################################################################"
@@ -16,6 +20,7 @@ message() {
 }
 
 installFlux() {
+  . "$REPO_ROOT"/setup/.env
   message "installing fluxv2"
   flux check --pre > /dev/null
   FLUX_PRE=$?
@@ -41,7 +46,9 @@ installFlux() {
   fi
 }
 
+"$REPO_ROOT"/setup/bootstrap-objects.sh
 installFlux
+"$REPO_ROOT"/setup/bootstrap-vault.sh
 
 message "all done!"
 kubectl get nodes -o=wide
