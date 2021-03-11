@@ -27,7 +27,7 @@ spec:
       configmap.reloader.stakater.com/reload: "grafana"
     persistence:
       enabled: true
-      storageClassName: "local-path"
+      storageClassName: "openebs-hostpath"
       size: 10Gi
       accessModes:
         - ReadWriteOnce

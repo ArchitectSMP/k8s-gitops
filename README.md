@@ -13,7 +13,7 @@ See [setup](setup/README.md) for more detail about setup & bootstrapping a new c
 * [cert-manager](cert-manager/)
 * [default](default/)
 * [flux-system-extra](flux-system-extra/)
-* [kube-system](kube-system/)=
+* [kube-system](kube-system/)
 * [monitoring](monitoring/)
 * [velero](velero/)
 
