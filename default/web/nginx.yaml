@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: architectsmp-com-nginx
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: nginx
+      version: 8.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    service:
+      type: ClusterIP
+    cloneStaticSiteFromGit:
+      enabled: true
+      repository: "https://github.com/architectsmp/architectsmp.com.git"
+      branch: "main"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+      hostname: architectsmp.com
