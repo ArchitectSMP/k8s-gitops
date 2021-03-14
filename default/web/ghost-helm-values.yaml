@@ -1,0 +1,11 @@
+---
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: ghost-helm-values
+  namespace: default
+spec:
+  keys:
+    - values.yaml
+  path: secrets/default/web/ghost-helm-values
+  type: Opaque

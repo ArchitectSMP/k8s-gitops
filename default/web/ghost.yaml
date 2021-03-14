@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ghost
+  namespace: default
+spec:
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: ghost
+      version: 12.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: ghost-helm-values
+      optional: false
+  values:
+    ghostHost: blog.architectsmp.com
+    ghostProtocol: https
+    ghostPort: 443
+    ghostUsername: mc.architect.smp@gmail.com
+    ghostEmail: mc.architect.smp@gmail.com
+    ghostBlogTitle: ArchitectSMP Blog
+    service:
+      type: ClusterIP
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/enable-global-auth: "false"
+        nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+        nginx.org/client-max-body-size: "20m"
+      hostname: blog.architectsmp.com
+      tls: true
+    persistence:
+      enable: true
+      storageClass: openebs-hostpath
+    mariadb:
+      auth:
+        rootPassword: "password"
+        password: "password"
+      primary:
+        readinessProbe:
+          enabled: false
+        livenessProbe:
+          enabled: false
+        persistence:
+          enabled: true
+          storageClass: openebs-hostpath

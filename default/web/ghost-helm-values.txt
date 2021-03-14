@@ -1,0 +1,1 @@
+ghostPassword: $GHOST_PASSWORD
