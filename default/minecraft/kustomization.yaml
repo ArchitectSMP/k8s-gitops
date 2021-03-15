@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - minecraft-creative.yaml
   - minecraft-database.yaml
-  - minecraft-proxy-bravo.yaml
+  - minecraft-proxy.yaml
   - minecraft-survival.yaml

@@ -7,5 +7,5 @@ resources:
   - namespace.yaml
 patchesStrategicMerge:
   - minecraft-creative.yaml
-  - minecraft-proxy-bravo.yaml
+  - minecraft-proxy.yaml
   - minecraft-survival.yaml
