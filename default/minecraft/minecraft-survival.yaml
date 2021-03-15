@@ -15,7 +15,7 @@ spec:
     spec:
       # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
       chart: minecraft
-      version: 2.1.4
+      version: 3.0.3
       sourceRef:
         kind: HelmRepository
         name: minecraft-server-charts
@@ -62,7 +62,7 @@ spec:
       rcon:
         enabled: true
         serviceType: ClusterIP
-      dynmap:
+      extraPort:
         service:
           enabled: true
         ingress:
