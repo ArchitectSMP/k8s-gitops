@@ -24,7 +24,7 @@ spec:
     image: itzg/bungeecord
     imageTag: 1.5.0-adopt13
     persistence:
-      storageClass: local-path
+      storageClass: openebs-hostpath
       dataDir:
         enabled: true
     bungeeCord:
