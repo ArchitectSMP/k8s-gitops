@@ -27,7 +27,7 @@ spec:
     image: itzg/minecraft-server
     imageTag: 1.8.0-adopt13
     persistence:
-      storageClass: local-path
+      storageClass: openebs-hostpath
       dataDir:
         enabled: true
         size: 10Gi
