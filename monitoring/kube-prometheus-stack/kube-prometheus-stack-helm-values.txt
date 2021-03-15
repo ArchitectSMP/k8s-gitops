@@ -27,7 +27,7 @@ alertmanager:
         - routing_key: "$PAGERDUTY_ROUTING_KEY"
           description: |-
             {{ template "pagerduty.custom.description" . }}
-          severity: '{{ .CommonLabels.severity }}'
+          severity: '{{ if ne .CommonLabels.severity "" }}{{ .CommonLabels.severity }}{{ else }}warning{{ end }}'
           details:
             firing: '{{ template "pagerduty.custom.instances" .Alerts.Firing }}'
             resolved: '{{ template "pagerduty.custom.instances" .Alerts.Resolved }}'
