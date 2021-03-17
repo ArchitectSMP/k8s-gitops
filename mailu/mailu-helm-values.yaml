@@ -1,0 +1,11 @@
+---
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: mailu-helm-values
+  namespace: mailu
+spec:
+  keys:
+    - values.yaml
+  path: secrets/mailu/mailu-helm-values
+  type: Opaque

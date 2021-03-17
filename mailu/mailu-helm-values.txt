@@ -1,0 +1,3 @@
+initialAccount:
+  password: "$MAILU_PASSWORD"
+secretKey: "$MAILU_SECRET_KEY"
