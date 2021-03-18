@@ -9,6 +9,9 @@ grafana.ini:
     client_id: $AUTH0_GRAFANA_CLIENT_ID
     client_secret: $AUTH0_GRAFANA_CLIENT_SECRET
     scopes: openid profile email
+    role_attribute_path: app_metadata.role
     auth_url: https://architectsmp.eu.auth0.com/authorize
     token_url: https://architectsmp.eu.auth0.com/oauth/token
     api_url: https://architectsmp.eu.auth0.com/userinfo
+  log
+    level: debug
