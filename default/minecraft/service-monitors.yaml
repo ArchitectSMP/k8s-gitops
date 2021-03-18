@@ -1,0 +1,36 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-survival
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: minecraft-survival-minecraft-prometheus
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+      honorLabels: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-creative
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: minecraft-creative-minecraft-prometheus
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: prometheus
+      interval: 15s
+      scrapeTimeout: 10s
+      honorLabels: true
