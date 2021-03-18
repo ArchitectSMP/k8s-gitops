@@ -1,0 +1,16 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: architectsmp-itzg-charts
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/ArchitectSMP/minecraft-server-charts
+  ref:
+    branch: package
+  ignore: |
+    # exclude all
+    /*
+    # include releases directory
+    !/releases/
