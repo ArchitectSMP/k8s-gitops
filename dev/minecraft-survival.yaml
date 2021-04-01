@@ -5,6 +5,7 @@ metadata:
   name: minecraft-survival
 spec:
   values:
+    nameOverride: dev
     persistence:
       dataDir:
         size: 1Gi
@@ -15,4 +16,13 @@ spec:
         memory: 2048Mi
     minecraftServer:
       memory: 1G
-      extraPorts: []
+      extraPorts:
+        - name: prometheus
+          containerPort: 9225
+          service:
+            enabled: true
+            annotations: {}
+            type: ClusterIP
+            port: 9225
+          ingress:
+            enabled: false
