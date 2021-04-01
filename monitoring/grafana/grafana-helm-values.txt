@@ -13,5 +13,3 @@ grafana.ini:
     auth_url: https://architectsmp.eu.auth0.com/authorize
     token_url: https://architectsmp.eu.auth0.com/oauth/token
     api_url: https://architectsmp.eu.auth0.com/userinfo
-  log
-    level: debug
