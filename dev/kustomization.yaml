@@ -9,3 +9,4 @@ patchesStrategicMerge:
   - minecraft-creative.yaml
   - minecraft-proxy.yaml
   - minecraft-survival.yaml
+  - service-monitors.yaml

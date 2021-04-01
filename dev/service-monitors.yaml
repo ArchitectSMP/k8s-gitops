@@ -1,0 +1,24 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-survival
+spec:
+  selector:
+    matchLabels:
+      app: minecraft-survival-dev-prometheus
+  namespaceSelector:
+    matchNames:
+      - dev
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minecraft-creative
+spec:
+  selector:
+    matchLabels:
+      app: minecraft-creative-dev-prometheus
+  namespaceSelector:
+    matchNames:
+      - dev
