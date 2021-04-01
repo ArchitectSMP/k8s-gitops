@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 57,
-  "iteration": 1616115177955,
+  "iteration": 1617291131385,
   "links": [],
   "panels": [
     {
@@ -67,12 +67,14 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:238",
           "alias": "Unique",
           "color": "#C0D8FF",
           "dashes": true,
           "lines": false
         },
         {
+          "$$hashKey": "object:239",
           "alias": "/Online/",
           "stack": true
         }
@@ -241,11 +243,13 @@
             "mode": "thresholds"
           },
           "custom": {},
-          "displayName": "",
+          "decimals": 1,
+          "displayName": "Lowest",
           "links": [],
           "mappings": [],
           "max": 20,
           "min": 0,
+          "noValue": "Error",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -278,7 +282,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "min"
           ],
           "fields": "",
           "values": false
@@ -291,7 +295,8 @@
       "targets": [
         {
           "expr": "mc_tps{container=~\"$container\"}",
-          "instant": true,
+          "instant": false,
+          "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
@@ -299,6 +304,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "TPS",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "logmin"
+            ]
+          }
+        }
+      ],
       "type": "gauge"
     },
     {
@@ -349,7 +364,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 161
+                "value": null
               }
             ]
           }
@@ -1234,9 +1249,9 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": "minecraft-survival-minecraft",
+          "value": "minecraft-survival-minecraft"
         },
         "datasource": "Prometheus",
         "definition": "label_values(mc_players_total, container)",
@@ -1265,7 +1280,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
