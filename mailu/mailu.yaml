@@ -29,6 +29,12 @@ spec:
     persistence:
       size: 20Gi
       storageClass: openebs-hostpath
+    roundcube:
+      resources:
+        requests:
+          cpu: 200m
+        limits:
+          cpu: 400m
   valuesFrom:
     - kind: Secret
       name: "mailu-helm-values"
