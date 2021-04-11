@@ -17,9 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    # image:
-    #   repository: grafana/grafana
-    #   tag: 7.0.4
+    image:
+      repository: grafana/grafana
+      tag: 6.7.6
     deploymentStrategy:
       type: Recreate
     podAnnotations:
@@ -51,6 +51,7 @@ spec:
       - grafana-clock-panel
       - vonage-status-panel
       - grafana-worldmap-panel
+      - "https://github.com/hastic/hastic-grafana-app/releases/download/0.5.1/corpglory-hastic-app-0.5.1.zip;corpglory-hastic-app"
     serviceMonitor:
       enabled: true
     dashboardProviders:
@@ -121,6 +122,10 @@ spec:
             access: proxy
             url: http://thanos-query-http:10902/
             isDefault: true
+          - name: Hastic Datasource
+            type: corpglory-hastic-datasource
+            access: proxy
+            url: http://hastic-server:8000/
           #- name: loki
           #  type: loki
           #  access: proxy
