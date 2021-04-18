@@ -25,6 +25,18 @@ spec:
   timeout: 20m
   values:
     additionalPrometheusRulesMap:
+      minecraft:
+        groups:
+          - name: offline
+            rules:
+              - alert: UserOffline
+                expr: time() - max_over_time(timestamp(changes(mc_player_online{container="minecraft-survival-minecraft"}[5m]) > 0)[60d:1m]) > 604800
+                for: 15m
+                labels:
+                  severity: info
+                annotations:
+                  summary: "{{ $labels.name }} is inactive"
+                  description: "{{ $labels.name }} has not logged in for over 7 days"
       uptimerobot:
         groups:
           - name: public
