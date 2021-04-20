@@ -1,0 +1,11 @@
+---
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: promcord-helm-values
+  namespace: monitoring
+spec:
+  keys:
+    - values.yaml
+  path: secrets/monitoring/promcord/promcord-helm-values
+  type: Opaque

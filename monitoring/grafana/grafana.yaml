@@ -92,6 +92,9 @@ spec:
         node-exporter-full:
           url: https://raw.githubusercontent.com/architectsmp/k8s-gitops/master/monitoring/grafana/dashboards/node_exporter_full.json
           datasource: Prometheus
+        promcord:
+          url: https://raw.githubusercontent.com/nimarion/promcord/master/grafana.json
+          datasource: Prometheus
         prometheus-exporter-summary:
           url: https://raw.githubusercontent.com/architectsmp/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
           datasource: Prometheus
