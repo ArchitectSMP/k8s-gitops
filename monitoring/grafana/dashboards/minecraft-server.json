@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 9,
-  "iteration": 1618771541303,
+  "iteration": 1619023893344,
   "links": [],
   "panels": [
     {
@@ -618,8 +618,48 @@
                 "value": null
               },
               {
-                "color": "green",
-                "value": 1
+                "color": "#EAB839",
+                "value": 0
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 10
+              },
+              {
+                "color": "#EF843C",
+                "value": 20
+              },
+              {
+                "color": "#E24D42",
+                "value": 30
+              },
+              {
+                "color": "#1F78C1",
+                "value": 40
+              },
+              {
+                "color": "#BA43A9",
+                "value": 50
+              },
+              {
+                "color": "#705DA0",
+                "value": 60
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 70
+              },
+              {
+                "color": "#CCA300",
+                "value": 80
+              },
+              {
+                "color": "#447EBC",
+                "value": 90
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 100
               }
             ]
           },
@@ -629,7 +669,7 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 7,
+        "w": 8,
         "x": 6,
         "y": 4
       },
@@ -653,7 +693,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sort_desc(avg_over_time(mc_player_online{container=~\"$container\"}[$__range]) * $__range_s)\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0",
+          "expr": "sort_desc(sum(max(avg_over_time(mc_player_online{container=~\"$container\"}[$__range]) * $__range_s) without (instance, pod)) without (service, container, job))\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -669,140 +709,79 @@
       "type": "bargauge"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "Prometheus",
-      "decimals": 2,
+      "description": "Data starts 2021-04-10T2000Z\n\nNew players will be artifically inflated to prevent alerts",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 604800
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 1209600
+              },
+              {
+                "color": "rgb(111, 111, 111)",
+                "value": 2419200
+              }
+            ]
+          },
+          "unit": "dtdurations"
+        },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 10,
-        "w": 11,
-        "x": 13,
+        "w": 10,
+        "x": 14,
         "y": 4
       },
-      "hiddenSeries": false,
-      "id": 200,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
+      "id": 205,
+      "interval": null,
+      "maxDataPoints": 500,
       "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:1610",
-          "alias": "/.*_transmit.*$/",
-          "transform": "negative-Y"
+        "displayMode": "lcd",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "$$hashKey": "object:1892",
-          "alias": "/.*_count$/",
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "7.5.3",
       "targets": [
         {
           "exemplar": true,
-          "expr": "(sum(irate(container_network_receive_bytes_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))\n",
+          "expr": "sort_desc(min(time() - max_over_time(timestamp(changes(mc_player_online{container=~\"$container\"}[5m]) > 0)[60d:1m])) without (instance, pod, service, container, job))\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0\n",
+          "format": "time_series",
+          "instant": true,
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{workload}}_receive",
+          "intervalFactor": 1,
+          "legendFormat": "{{name}}",
           "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "(sum(irate(container_network_transmit_bytes_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))\n",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{workload}}_transmit",
-          "refId": "B"
-        },
-        {
-          "exemplar": true,
-          "expr": "(sum(irate(container_network_receive_packets_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{workload}}_receive_count",
-          "refId": "C"
-        },
-        {
-          "exemplar": true,
-          "expr": "(sum(irate(container_network_transmit_packets_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{workload}}_transmit_count",
-          "refId": "D"
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
-      "title": "Network usage per second",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:976",
-          "format": "Bps",
-          "label": "transmit (-) / receive (+)",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:977",
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": true,
-        "alignLevel": null
-      }
+      "title": "Players time since last login (60d)",
+      "transformations": [],
+      "type": "bargauge"
     },
     {
       "backgroundColor": "rgba(128,128,128,0.1)",
@@ -834,7 +813,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
+        "h": 24,
         "w": 6,
         "x": 0,
         "y": 10
@@ -957,6 +936,142 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 18,
+        "x": 6,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 200,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:1610",
+          "alias": "/.*_transmit.*$/",
+          "transform": "negative-Y"
+        },
+        {
+          "$$hashKey": "object:1892",
+          "alias": "/.*_count$/",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(sum(irate(container_network_receive_bytes_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))\n",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{workload}}_receive",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(irate(container_network_transmit_bytes_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))\n",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{workload}}_transmit",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(irate(container_network_receive_packets_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{workload}}_receive_count",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(irate(container_network_transmit_packets_total[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{workload=~\"$container\", workload_type=\"deployment\"}) by (workload))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{workload}}_transmit_count",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network usage per second",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:976",
+          "format": "Bps",
+          "label": "transmit (-) / receive (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:977",
+          "format": "pps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": true,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -970,7 +1085,7 @@
         "h": 5,
         "w": 18,
         "x": 6,
-        "y": 14
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 1,
@@ -1108,10 +1223,10 @@
       "fill": 10,
       "fillGradient": 6,
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 12,
         "x": 6,
-        "y": 19
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 191,
@@ -1211,7 +1326,7 @@
       "timeShift": null,
       "title": "Tick Durations",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 2,
         "value_type": "individual"
       },
@@ -1294,10 +1409,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 6,
         "x": 18,
-        "y": 19
+        "y": 26
       },
       "id": 7,
       "links": [],
@@ -1346,7 +1461,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 25
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 199,
@@ -1486,7 +1601,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 25
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 5,
@@ -1529,6 +1644,7 @@
           "step": 4
         },
         {
+          "exemplar": true,
           "expr": "mc_jvm_memory{type='allocated', container=~\"$container\"} - scalar(mc_jvm_memory{type='free', container=~\"$container\"})",
           "format": "time_series",
           "instant": false,
@@ -1550,7 +1666,7 @@
       "timeShift": null,
       "title": "JVM Memory",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 0,
         "value_type": "individual"
       },
@@ -1605,7 +1721,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 25
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 3,
@@ -1651,7 +1767,7 @@
       "timeShift": null,
       "title": "Loaded Chunks",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 0,
         "value_type": "individual"
       },
@@ -1704,9 +1820,9 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 13,
+        "w": 24,
         "x": 0,
-        "y": 31
+        "y": 40
       },
       "hiddenSeries": false,
       "id": 4,
@@ -1807,115 +1923,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 11,
-        "x": 13,
-        "y": 31
-      },
-      "hiddenSeries": false,
-      "id": 11,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null as zero",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.3",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": true,
-      "targets": [
-        {
-          "expr": "sum (mc_villagers_total{container=~\"$container\"}) by (world, level, profession)",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{world}}:  {{profession}}  (lv{{level}})",
-          "metric": "mc_entities_total",
-          "refId": "A",
-          "step": 4
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Villagers",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:4047",
-          "decimals": 0,
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:4048",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
         "h": 12,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 46
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1965,9 +1976,9 @@
       "timeShift": null,
       "title": "Entities",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 2,
-        "value_type": "individual"
+        "value_type": "cumulative"
       },
       "type": "graph",
       "xaxis": {
@@ -2004,181 +2015,109 @@
       }
     },
     {
-      "Aggregate": "last",
-      "BarPadding": 15,
-      "BaseLineColor": "#ff0000",
-      "BaseLineValue": null,
-      "BaseLineWidth": 1,
-      "CurveType": "Linear",
-      "DateFormat": "YYYY-MM-DD HH:mm:ss",
-      "DateTimeColName": "",
-      "DotColor": "white",
-      "DotSize": 10,
-      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
-      "FlashHighLimitBar": false,
-      "FlashLowLimitBar": false,
-      "GroupColName": "",
-      "GroupCols": 0,
-      "GroupGap": 5,
-      "GroupLabelColor": "#ffffff",
-      "GroupLabelFontSize": "200%",
-      "GroupNameFilter": "",
-      "GroupRenamingRules": [],
-      "GroupSortString": "",
-      "HighAxisColor": "#ffffff",
-      "HighAxisWidth": 2,
-      "HighBarColor": "rgb(120, 128, 0)",
-      "HighLimitBarColor": "#C4162A",
-      "HighLimitBarFlashColor": "#3274D9",
-      "HighLimitBarFlashTimeout": 1000,
-      "HighLimitLineColor": "#C4162A",
-      "HighLimitValue": 14,
-      "HighLmitLineWidth": 1,
-      "HighSideMargin": 22,
-      "Horizontal": true,
-      "LabelColName": "name (lastNotNull)",
-      "LabelColor": "#C0D8FF",
-      "LabelFontSize": "80%",
-      "LabelMargin": null,
-      "LabelNameFilter": "",
-      "LabelRenamingRules": [],
-      "LableAngle": 0,
-      "Legend": false,
-      "LineColor": "blue",
-      "LineWidth": 5,
-      "Links": [],
-      "LowAxisColor": "#ffffff",
-      "LowAxisWidth": 2,
-      "LowBarColor": "teal",
-      "LowLimitBarColor": "#37872D",
-      "LowLimitBarFlashColor": "#ffa500",
-      "LowLimitBarFlashTimeout": 200,
-      "LowLimitLineColor": "#F2CC0C",
-      "LowLimitValue": 7,
-      "LowLmitLineWidth": 1,
-      "LowSideMargin": 0,
-      "MaxLineColor": "rgb(179, 179, 179)",
-      "MaxLineValue": 16,
-      "MaxLineWidth": 1,
-      "MinLineColor": "#56A64B",
-      "MinLineValue": 0,
-      "MinLineWidth": 1,
-      "MultiBarPadding": 10,
-      "OddRowColor": "rgba(33, 33, 34, 0.92)",
-      "OutOfRangeLabelColor": "rgb(255, 255, 255)",
-      "OutlineColor": "rgba(245, 255, 0, 0)",
-      "RecolorColName": "",
-      "RecolorHighLimitBar": true,
-      "RecolorLowLimitBar": true,
-      "RecolorRules": [
-        {
-          "$$hashKey": "object:254",
-          "color": "#777777",
-          "matchType": "exact",
-          "pattern": ""
-        }
-      ],
-      "ScaleFactor": 0.000011574,
-      "ShowBars": true,
-      "ShowBaseLine": false,
-      "ShowDate": false,
-      "ShowGroupLabels": true,
-      "ShowHighLimitLine": true,
-      "ShowLabels": true,
-      "ShowLeftAxis": true,
-      "ShowLines": false,
-      "ShowLowLimitLine": true,
-      "ShowMaxLine": true,
-      "ShowMinLine": true,
-      "ShowRightAxis": true,
-      "ShowValues": false,
-      "SortColName": "Value (min)",
-      "SortDirection": "descending",
-      "TZOffsetHours": 0,
-      "ToolTipFontSize": "100%",
-      "ToolTipType": "",
-      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
-      "ValueColName": "",
-      "ValueColor": "#ffffff",
-      "ValueDecimals": null,
-      "ValueFontSize": "100%",
-      "ValuePosition": "top",
-      "Values": [
-        {
-          "$$hashKey": "object:134",
-          "Col": 2,
-          "HighBarColor": "#E0B400",
-          "LowBarColor": "#A352CC",
-          "Name": "Value (min)",
-          "Selected": true
-        }
-      ],
-      "datasource": null,
-      "description": "Data starts 2021-04-10T2000Z\n\nNew players will be artifically inflated to prevent alerts",
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "links": []
+        },
         "overrides": []
       },
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 12,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 46
       },
-      "id": 204,
+      "hiddenSeries": false,
+      "id": 11,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
       "pluginVersion": "7.5.3",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": true,
       "targets": [
         {
-          "exemplar": true,
-          "expr": "time() - max_over_time(timestamp(changes(mc_player_online{container=~\"$container\"}[5m]) > 0)[60d:1m])\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0\n",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "expr": "sum (mc_villagers_total{container=~\"$container\"}) by (world, level, profession)",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{world}}:  {{profession}}  (lv{{level}})",
+          "metric": "mc_entities_total",
+          "refId": "A",
+          "step": 4
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Players time since last login (60d)",
-      "transformations": [
+      "title": "Villagers",
+      "tooltip": {
+        "shared": false,
+        "sort": 2,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
         {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Value": {
-                "aggregations": [
-                  "min"
-                ],
-                "operation": "aggregate"
-              },
-              "name": {
-                "aggregations": [
-                  "lastNotNull"
-                ],
-                "operation": "aggregate"
-              },
-              "uid": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
+          "$$hashKey": "object:4047",
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         },
         {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Value (min)"
-              }
-            ]
-          }
+          "$$hashKey": "object:4048",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
-      "type": "michaeldmoore-multistat-panel"
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "1m",
@@ -2190,7 +2129,7 @@
       {
         "allValue": "minecraft-(creative|survival).+",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "minecraft-survival-minecraft",
           "value": "minecraft-survival-minecraft"
         },
@@ -2221,7 +2160,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {
@@ -2252,5 +2191,5 @@
   "timezone": "utc",
   "title": "Minecraft",
   "uid": "CwnpN4wGz",
-  "version": 23
+  "version": 29
 }

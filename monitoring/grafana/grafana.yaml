@@ -51,7 +51,6 @@ spec:
       - grafana-clock-panel
       - vonage-status-panel
       - grafana-worldmap-panel
-      - michaeldmoore-multistat-panel
     serviceMonitor:
       enabled: true
     dashboardProviders:
