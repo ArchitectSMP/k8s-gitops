@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 9,
-  "iteration": 1619023893344,
+  "id": 6,
+  "iteration": 1619638235504,
   "links": [],
   "panels": [
     {
@@ -609,6 +609,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "percentage",
@@ -616,10 +617,6 @@
               {
                 "color": "red",
                 "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0
               },
               {
                 "color": "#6ED0E0",
@@ -693,7 +690,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sort_desc(sum(max(avg_over_time(mc_player_online{container=~\"$container\"}[$__range]) * $__range_s) without (instance, pod)) without (service, container, job))\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0",
+          "expr": "sort_desc(sum(sum_over_time(mc_player_online{container=~\"$container\"}[$__range])) by (name) * 15) > 0",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -704,18 +701,19 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Players total time online",
+      "title": "Players total time online (15s/i)",
       "transformations": [],
       "type": "bargauge"
     },
     {
       "datasource": "Prometheus",
-      "description": "Data starts 2021-04-10T2000Z\n\nNew players will be artifically inflated to prevent alerts",
+      "description": "Data starts 2021-04-10T2000Z\n\nNew players will be artificially inflated to prevent alerts",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -768,7 +766,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sort_desc(min(time() - max_over_time(timestamp(changes(mc_player_online{container=~\"$container\"}[5m]) > 0)[60d:1m])) without (instance, pod, service, container, job))\nunless avg_over_time(mc_player_online{container=~\"$container\"}[60d]) == 0\n",
+          "expr": "sort_desc(min(time() - max_over_time(timestamp(changes(mc_player_online{container=~\"$container\"}[5m]) > 0)[45d:1m])) without (instance, pod, service, container, job))\nunless avg_over_time(mc_player_online{container=~\"$container\"}[45d]) == 0\n",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -779,7 +777,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Players time since last login (60d)",
+      "title": "Players time since last login (45d)",
       "transformations": [],
       "type": "bargauge"
     },
@@ -788,17 +786,17 @@
       "colorMaps": [
         {
           "$$hashKey": "object:777",
-          "color": "#FF6971",
+          "color": "#73BF69",
           "text": "Offline"
         },
         {
           "$$hashKey": "object:2042",
-          "color": "#77DD77",
+          "color": "#73BF69",
           "text": "Online"
         },
         {
           "$$hashKey": "object:2359",
-          "color": "#FF6971",
+          "color": "#F2495C",
           "text": "Offline"
         }
       ],
@@ -853,6 +851,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         }
@@ -1976,9 +1975,9 @@
       "timeShift": null,
       "title": "Entities",
       "tooltip": {
-        "shared": false,
+        "shared": true,
         "sort": 2,
-        "value_type": "cumulative"
+        "value_type": "individual"
       },
       "type": "graph",
       "xaxis": {
@@ -2118,9 +2117,182 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                604800
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1209600
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "15m",
+        "frequency": "30m",
+        "handler": 1,
+        "message": "Inactive user(s): ${name}",
+        "name": "Survival players time since last login alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Data starts 2021-04-10T2000Z\n\nNew players will be artifically inflated to prevent alerts",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "hiddenSeries": false,
+      "id": 206,
+      "interval": null,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "maxDataPoints": 500,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "min(time() - max_over_time(timestamp(changes(mc_player_online{container=\"minecraft-survival-minecraft\"}[5m]) > 0)[60d:1m])) without (instance, pod, service, container, job)\nunless avg_over_time(mc_player_online{container=\"minecraft-survival-minecraft\"}[60d]) == 0\n",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 604800,
+          "visible": true
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Survival players time since last login",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [],
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1366",
+          "format": "dtdurations",
+          "label": null,
+          "logBase": 2,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1367",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
-  "refresh": "1m",
+  "refresh": false,
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -2129,7 +2301,7 @@
       {
         "allValue": "minecraft-(creative|survival).+",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "minecraft-survival-minecraft",
           "value": "minecraft-survival-minecraft"
         },
@@ -2160,8 +2332,8 @@
     ]
   },
   "time": {
-    "from": "now-12h",
-    "to": "now"
+    "from": "2021-04-27T17:47:57.564Z",
+    "to": "2021-04-27T19:17:09.670Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2191,5 +2363,5 @@
   "timezone": "utc",
   "title": "Minecraft",
   "uid": "CwnpN4wGz",
-  "version": 29
+  "version": 16
 }
