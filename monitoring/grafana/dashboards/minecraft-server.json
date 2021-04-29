@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 6,
-  "iteration": 1619638235504,
+  "iteration": 1619729374028,
   "links": [],
   "panels": [
     {
@@ -665,7 +665,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 6,
         "y": 4
@@ -715,6 +715,8 @@
           },
           "decimals": 1,
           "mappings": [],
+          "max": 2419200,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -732,7 +734,7 @@
               },
               {
                 "color": "rgb(111, 111, 111)",
-                "value": 2419200
+                "value": 1814400
               }
             ]
           },
@@ -741,7 +743,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 10,
         "x": 14,
         "y": 4
@@ -811,7 +813,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 24,
+        "h": 23,
         "w": 6,
         "x": 0,
         "y": 10
@@ -946,10 +948,11 @@
         "h": 7,
         "w": 18,
         "x": 6,
-        "y": 14
+        "y": 13
       },
       "hiddenSeries": false,
       "id": 200,
+      "interval": "30s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1084,7 +1087,7 @@
         "h": 5,
         "w": 18,
         "x": 6,
-        "y": 21
+        "y": 20
       },
       "hiddenSeries": false,
       "id": 1,
@@ -1225,7 +1228,7 @@
         "h": 8,
         "w": 12,
         "x": 6,
-        "y": 26
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 191,
@@ -1411,7 +1414,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 26
+        "y": 25
       },
       "id": 7,
       "links": [],
@@ -1460,7 +1463,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 34
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 199,
@@ -1600,7 +1603,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 34
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 5,
@@ -1720,7 +1723,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 34
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 3,
@@ -1821,7 +1824,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 39
       },
       "hiddenSeries": false,
       "id": 4,
@@ -1925,7 +1928,7 @@
         "h": 12,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 45
       },
       "hiddenSeries": false,
       "id": 12,
@@ -2031,7 +2034,7 @@
         "h": 12,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 45
       },
       "hiddenSeries": false,
       "id": 11,
@@ -2196,11 +2199,11 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 58
+        "y": 57
       },
       "hiddenSeries": false,
       "id": 206,
-      "interval": null,
+      "interval": "1m",
       "legend": {
         "avg": false,
         "current": false,
@@ -2219,8 +2222,8 @@
       },
       "percentage": false,
       "pluginVersion": "7.5.3",
-      "pointradius": 2,
-      "points": false,
+      "pointradius": 0.5,
+      "points": true,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
@@ -2302,8 +2305,8 @@
         "allValue": "minecraft-(creative|survival).+",
         "current": {
           "selected": false,
-          "text": "minecraft-survival-minecraft",
-          "value": "minecraft-survival-minecraft"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "Prometheus",
         "definition": "label_values(mc_players_total, container)",
@@ -2332,8 +2335,8 @@
     ]
   },
   "time": {
-    "from": "2021-04-27T17:47:57.564Z",
-    "to": "2021-04-27T19:17:09.670Z"
+    "from": "2021-04-29T20:39:12.048Z",
+    "to": "2021-04-29T21:25:22.113Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2363,5 +2366,5 @@
   "timezone": "utc",
   "title": "Minecraft",
   "uid": "CwnpN4wGz",
-  "version": 16
+  "version": 22
 }
