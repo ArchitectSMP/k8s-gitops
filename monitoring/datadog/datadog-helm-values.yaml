@@ -1,0 +1,11 @@
+---
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: datadog-helm-values
+  namespace: monitoring
+spec:
+  keys:
+    - values.yaml
+  path: secrets/monitoring/datadog/datadog-helm-values
+  type: Opaque

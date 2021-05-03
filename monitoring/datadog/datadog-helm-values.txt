@@ -1,0 +1,2 @@
+datadog:
+  apiKey: $DATADOG_API_KEY
