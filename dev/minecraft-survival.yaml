@@ -16,6 +16,10 @@ spec:
         memory: 2048Mi
     minecraftServer:
       memory: 1G
+      jvmOpts: "-javaagent:dd-java-agent.jar"
+      extraEnv:
+        DD_PROFILING_ENABLED: "true"
+        DD_LOGS_INJECTION: "true"
       extraPorts:
         - name: prometheus
           containerPort: 9225
