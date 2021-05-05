@@ -17,6 +17,10 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    agents:
+      podAnnotations:
+        container.apparmor.security.beta.kubernetes.io/agent: localhost/datadog-agent
+        container.apparmor.security.beta.kubernetes.io/process-agent: localhost/datadog-agent
     datadog:
       apm:
         enabled: true
@@ -27,6 +31,7 @@ spec:
       processAgent:
         enabled: true
         processCollection: true
+      site: datadoghq.eu
     kubeStateMetricsEnabled: false
     targetSystem: linux
   valuesFrom:
