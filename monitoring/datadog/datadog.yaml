@@ -28,6 +28,8 @@ spec:
       logs:
         enabled: true
         containerCollectAll: true
+      networkMonitoring:
+        enabled: true
       processAgent:
         enabled: true
         processCollection: true
