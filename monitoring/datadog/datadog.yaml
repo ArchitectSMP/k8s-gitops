@@ -24,6 +24,10 @@ spec:
     datadog:
       apm:
         enabled: true
+      clusterAgent:
+        enabled: true
+        metricsProvider:
+          enabled: true
       criSocketPath: /var/run/k3s/containerd/containerd.sock
       logs:
         enabled: true

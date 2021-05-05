@@ -1,2 +1,3 @@
 datadog:
-  apiKey: $DATADOG_API_KEY
+  apiKey: $DD_API_KEY
+  appKey: $DD_APP_KEY
