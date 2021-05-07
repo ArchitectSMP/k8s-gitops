@@ -37,6 +37,8 @@ spec:
       processAgent:
         enabled: true
         processCollection: true
+      prometheusScrape:
+        enabled: true
       site: datadoghq.eu
     kubeStateMetricsEnabled: false
     targetSystem: linux
