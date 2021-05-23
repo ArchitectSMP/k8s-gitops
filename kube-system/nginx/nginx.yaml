@@ -28,6 +28,8 @@ spec:
       config:
         custom-http-errors: 404,401,403,500,503
         hsts-max-age: "31449600"
+        enable-opentracing: "true"
+        datadog-collector-host: "$HOST_IP"
       use-forwarded-headers: "true"
       service:
         loadBalancerIP: 138.201.203.178
@@ -41,6 +43,11 @@ spec:
           enabled: false
       extraArgs:
         default-ssl-certificate: "cert-manager/acme-crt-secret"
+      extraEnvs:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
       resources:
         requests:
           memory: 500Mi
