@@ -1,0 +1,11 @@
+---
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: github-api-token
+  namespace: flux-system
+spec:
+  keys:
+    - token
+  path: secrets/flux-system/github-api-token
+  type: Opaque
