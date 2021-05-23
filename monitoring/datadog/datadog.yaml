@@ -18,6 +18,9 @@ spec:
       interval: 5m
   values:
     agents:
+      image:
+        repository: ghcr.io/architectsmp/datadog-agent
+        tag: latest
       podAnnotations:
         container.apparmor.security.beta.kubernetes.io/agent: localhost/datadog-agent
         container.apparmor.security.beta.kubernetes.io/process-agent: localhost/datadog-agent
