@@ -33,6 +33,20 @@ spec:
       replicaCount: 1
       # extraArgs:
       #   - --leader-elect=false
+    podAnnotations:
+      ad.datadoghq.com/cert-manager.check_names: |
+        ["prometheus"]
+      ad.datadoghq.com/cert-manager.init_configs: |
+        [{}]
+      ad.datadoghq.com/cert-manager.instances: |
+        [
+          {
+            "prometheus_url": "http://%%host%%:9402/metrics"\,
+            "namespace": "cert-manager"\,
+            "metrics": ["*"]\,
+            "max_returned_metrics": "1000"
+          }
+        ]
     prometheus:
       enabled: true
       servicemonitor:
