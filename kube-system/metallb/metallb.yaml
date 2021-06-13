@@ -48,7 +48,7 @@ spec:
       image:
         registry: docker.io
         repository: metallb/speaker
-        tag: v0.10.1
+        tag: v0.10.2
       prometheus:
         serviceMonitor:
           enabled: true
