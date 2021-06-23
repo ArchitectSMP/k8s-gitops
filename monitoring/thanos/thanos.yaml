@@ -24,7 +24,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: quay.io/thanos/thanos
+      repository: quay.io/repository/thanos/thanos
       tag: v0.21.1
     query:
       replicaCount: 2
