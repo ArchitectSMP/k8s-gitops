@@ -15,6 +15,7 @@ spec:
       limits:
         memory: 2048Mi
     minecraftServer:
+      version: "1.17"
       memory: 1G
       jvmOpts: "-javaagent:dd-java-agent.jar -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256"
       extraEnv:
