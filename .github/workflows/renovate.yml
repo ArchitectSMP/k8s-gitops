@@ -1,38 +1,38 @@
 ---
-name: renovate
+name: Schedule - Renovate Helm Releases
 
-on:
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */12 * * *"
 
 jobs:
-  helm-releases:
-    runs-on: ubuntu-latest
+  renovate-helm-releases:
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 1
 
-      - name: Install yq
-        run: |
-          sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+      - name: Renovate Helm Releases
+        uses: k8s-at-home/renovate-helm-releases@v1
+        with:
+          cluster-path: "./"
+          exclude-folders: "./dev"
 
-      - name: Create HelmRelease annotations
-        run: ./.github/create-helmrelease-annotations.sh
-
-      - name: Create pull request for HelmRelease annotations
+      - name: Create pull request for renovatebot helm-release annotations
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: helm-release-annotations
-          title: "[renovate] create helmrelease annotations [ci-skip]"
+          branch: renovate-annotations
+          delete-branch: true
+          title: "chore(deps): update renovate annotations"
           signoff: true
-          committer: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
-          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
-          commit-message: "chore(deps): create renovatebot helmrelease annotations"
+          committer: "ArchitectSMP <bloodycoffin@users.noreply.github.com>"
+          author: "ArchitectSMP <bloodycoffin@users.noreply.github.com>"
+          assignees: "bloodycoffin"
+          commit-message: "chore(deps): update renovate annotations"
           body: |
-            Signed-off-by: Bloody Coffin <bloodycoffin@users.noreply.github.com>
-          labels: renovate/helm-release-annotations
+            Update HelmReleases inorder for Renovate to pick up new versions of Helm charts
+          labels: renovate/annotations
