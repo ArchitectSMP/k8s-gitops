@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://helm.datadoghq.com/
+      # renovate: registryUrl=https://helm.datadoghq.com
       chart: datadog
       version: 2.16.5
       sourceRef:

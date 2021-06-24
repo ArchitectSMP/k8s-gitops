@@ -14,6 +14,7 @@ spec:
       retries: 3
   chart:
     spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: ghost
       version: 12.1.2
       sourceRef:
