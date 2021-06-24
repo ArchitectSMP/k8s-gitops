@@ -23,7 +23,7 @@ spec:
   values:
     # ref: https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml
     image: itzg/minecraft-server
-    imageTag: 1.8.0-adopt13
+    imageTag: 2021.16.0-java16-openj9
     persistence:
       storageClass: openebs-hostpath
       dataDir:
