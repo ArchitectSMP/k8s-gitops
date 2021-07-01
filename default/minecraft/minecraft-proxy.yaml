@@ -23,7 +23,7 @@ spec:
       interval: 5m
   values:
     image: itzg/bungeecord
-    imageTag: 2021.16.0-java16-openj9
+    imageTag: 1.5.0-adopt13
     persistence:
       storageClass: openebs-hostpath
       dataDir:
