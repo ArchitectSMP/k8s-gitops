@@ -15,6 +15,7 @@ spec:
   chart:
     spec:
       chart: minecraft-proxy
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: minecraft-server-charts
@@ -22,7 +23,7 @@ spec:
       interval: 5m
   values:
     image: itzg/bungeecord
-    imageTag: 1.5.0-adopt13
+    imageTag: 2021.16.0-java16-openj9
     persistence:
       storageClass: openebs-hostpath
       dataDir:
@@ -30,11 +31,13 @@ spec:
     minecraftProxy:
       type: WATERFALL
       waterfallVersion: 1.17
-      waterfallBuildId: 437
+      waterfallBuildId: 438
       serviceType: LoadBalancer
       loadBalancerIP: 138.201.203.183
-      externalTrafficPolicy: Local
+      externalTrafficPolicy: Cluster
       memory: 2G
       rcon:
         enabled: true
         serviceType: ClusterIP
+      serviceAnnotations:
+        metallb.universe.tf/allow-shared-ip: proxy
