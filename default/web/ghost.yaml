@@ -16,7 +16,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: ghost
-      version: 13.0.14
+      version: 13.0.17
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
