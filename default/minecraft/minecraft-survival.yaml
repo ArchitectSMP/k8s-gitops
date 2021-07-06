@@ -50,7 +50,7 @@ spec:
       forceReDownload: true
       difficulty: hard
       playerIdleTimeout: 300
-      levelSeed: "237442222458213"
+      levelSeed: "143914606644338"
       maxPlayers: 40
       maxWorldSize: 100000
       viewDistance: 4
