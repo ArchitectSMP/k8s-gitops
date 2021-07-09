@@ -8,3 +8,5 @@ spec:
     minecraftProxy:
       loadBalancerIP: 138.201.203.179
       memory: 512M
+      serviceAnnotations:
+        metallb.universe.tf/allow-shared-ip: dev-proxy
