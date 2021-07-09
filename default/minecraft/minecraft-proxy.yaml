@@ -29,7 +29,7 @@ spec:
         enabled: true
     minecraftProxy:
       type: WATERFALL
-      waterfallVersion: 1.16.5
+      waterfallVersion: 1.16
       serviceType: LoadBalancer
       loadBalancerIP: 138.201.203.183
       externalTrafficPolicy: Cluster
