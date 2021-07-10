@@ -53,7 +53,7 @@ spec:
       forceReDownload: true
       difficulty: easy
       levelType: FLAT
-      worldSaveName: world
+      worldSaveName: seasontwo
       playerIdleTimeout: 300
       maxWorldSize: 100000
       generateStructures: false
